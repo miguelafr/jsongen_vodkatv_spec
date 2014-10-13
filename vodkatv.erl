@@ -59,7 +59,6 @@ postcondition(Super, State, Call, Result) ->
     LinkTitle = js_links_machine:call_link_title(Call),
     PrivateState = js_links_machine:private_state(State),
     JSONResult = js_links_machine:get_json_body(Result),
-    io:format("* postcondition: ~p => ~p ~n", [LinkTitle, JSONResult]),
     postcondition_internal(PrivateState, JSONResult, LinkTitle) andalso
         Super(State, Call, Result).
 
