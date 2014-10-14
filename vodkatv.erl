@@ -18,8 +18,8 @@ initial_state() ->
 link_permitted(_Super, State, Link) ->
     PrivateState = jsg_links_utils:private_state(State),
     LinkTitle = jsg_links:link_title(Link),
-    io:format("link_permitted => token: ~p | title: ~p~n",
-        [PrivateState#state.token, LinkTitle]),
+    %%io:format("link_permitted => token: ~p | title: ~p~n",
+      %%  [PrivateState#state.token, LinkTitle]),
     case {PrivateState#state.token, LinkTitle} of
         {undefined, "login"} ->
             true;
@@ -60,9 +60,17 @@ next_state_internal(PrivateState, _JSONResult, _LinkTitle) ->
 postcondition(Super, State, Call, Result) ->
     LinkTitle = js_links_machine:call_link_title(Call),
     PrivateState = jsg_links_utils:private_state(State),
-    JSONResult = js_links_machine:get_json_body(Result),
-    postcondition_internal(PrivateState, JSONResult, LinkTitle) andalso
-        Super(State, Call, Result).
+    case js_links_machine:validate_call_not_error_result(Call,Result) of
+      true -> 
+	case js_links_machine:response_has_body(Result) of
+	  true ->
+	    JSONResult = js_links_machine:get_json_body(Result),
+	    postcondition_internal(PrivateState, JSONResult, LinkTitle) andalso
+	      Super(State, Call, Result);
+	  false -> false
+	end;
+      false -> false
+    end.
 
 postcondition_internal(_PrivateState, _JSONResult, "login") ->
     true;
