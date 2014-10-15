@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "vodkatvChannelId": {
+            "type": "integer"
+        }
+    },
+    "links": [
+        {
+            "rel": "channel",
+            "href": "http://localhost:8082/vodkatv/external/client/plugins/television/FindChannelById.do?vodkatvChannelId={vodkatvChannelId}&token=4b1976ee-8482-4caf-9be0-889eddd7de07&userAgent=Chrome",
+            "title": "channel",
+            "method": "GET"
+        }
+    ]
+}

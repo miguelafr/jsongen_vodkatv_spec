@@ -14,7 +14,8 @@
             "rel": "channels",
             "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindChannels.do?userAgent=Chrome&token={token}",
             "title": "channels",
-            "method": "GET"
+            "method": "GET",
+            "targetSchema" : {"$ref" : "channels_response.jsch#"}
         }
     ]
 }

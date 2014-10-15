@@ -1,0 +1,25 @@
+{
+    "type": "object",
+    "properties": {
+        "channels": {
+            "type": "object",
+            "properties": {
+                "elements": {
+                    "type": "array",
+                    "items": {"$ref" : "channel.jsch#"}
+                }
+            }
+        },
+        "iterator": {
+            "type": "object",
+            "properties": {
+                "existsNext": {
+                    "type": "boolean"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
