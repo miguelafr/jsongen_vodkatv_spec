@@ -10,7 +10,8 @@
             "rel": "channel",
             "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindChannelById.do?vodkatvChannelId={vodkatvChannelId}&token={token}&userAgent=Chrome",
             "title": "channel",
-            "method": "GET"
+            "method": "GET",
+            "targetSchema" : {"$ref" : "channel.jsch#"}
         }
     ]
 }
