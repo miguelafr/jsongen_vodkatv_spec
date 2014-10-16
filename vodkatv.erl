@@ -19,7 +19,7 @@ link_permitted(_Super, State, Link) ->
     PrivateState = jsg_links_utils:private_state(State),
     LinkTitle = jsg_links:link_title(Link),
     %%io:format("link_permitted => token: ~p | title: ~p~n",
-      %%  [PrivateState#state.token, LinkTitle]),
+    %%	      [PrivateState#state.token, LinkTitle]),
     case {PrivateState#state.token, LinkTitle} of
         {undefined, "login"} ->
             true;
@@ -35,7 +35,6 @@ link_permitted(_Super, State, Link) ->
 % next_state
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 next_state(Super, State, Result, Call) ->
-
     LinkTitle = js_links_machine:call_link_title(Call),
     PrivateState = jsg_links_utils:private_state(State),
     JSONResult = js_links_machine:get_json_body(Result),
@@ -43,7 +42,7 @@ next_state(Super, State, Result, Call) ->
     NextPrivateState = next_state_internal(PrivateState, JSONResult, LinkTitle), 
 
     Super(jsg_links_utils:set_private_state(NextPrivateState, State),
-        Result, Call).
+	  Result, Call).
 
 next_state_internal(PrivateState, JSONResult, "login") ->
     Token = jsg_jsonschema:propertyValue(JSONResult, "token"),
