@@ -3,10 +3,11 @@
     "properties": {
         "channels": {
             "type": "object",
+	    "required" : ["elements"],
             "properties": {
                 "elements": {
                     "type": "array",
-                    "items": {"$ref" : "channel.jsch#"}
+                    "items": {"$ref" : "channel.jsch"}
                 }
             }
         },

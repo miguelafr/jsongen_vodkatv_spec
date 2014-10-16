@@ -10,3 +10,8 @@ test1(N) ->
         "channels_response.jsch", "channel.jsch"],
     [{timeout,N},{show_http_timing,true}]).
 
+test1(N,Options) ->
+  js_links_machine:run_statem(vodkatv,["login.jsch","login_response.jsch",
+        "channels_response.jsch", "channel.jsch"],
+    [{timeout,N},{show_http_timing,true}|Options]).
+
