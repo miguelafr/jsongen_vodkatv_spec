@@ -4,15 +4,14 @@
         "vodkatvChannelId": {
             "type": "string"
         },
-        "currentNext": {
+        "events": {
             "type": "object",
             "properties": {
-                "current": {"$ref" : "event.jsch#"},
-                "next": {"$ref" : "event.jsch#"},
-                "nextEvents": {
+                "elements":  {
                     "type": "array",
                     "items": {"$ref" : "event.jsch#"}
-                }
+                },
+                "iterator": {"$ref" : "iterator.jsch#"}
             }
         }
     },
@@ -22,7 +21,7 @@
             "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindChannelById.do?vodkatvChannelId={vodkatvChannelId}&token={token}&userAgent=Chrome",
             "title": "channel",
             "method": "GET",
-            "targetSchema" : {"$ref" : "channel_response.jsch#"}
+            "targetSchema" : {"$ref" : "channel.jsch#"}
         },
         {
             "rel": "schedule_by_channel",

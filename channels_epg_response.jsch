@@ -7,7 +7,7 @@
             "properties": {
                 "elements": {
                     "type": "array",
-                    "items": {"$ref" : "channel.jsch#"}
+                    "items": {"$ref" : "channel_epg.jsch#"}
                 }
             }
         },
