@@ -1,0 +1,20 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        }
+    },
+    "links": [
+        {
+            "rel": "event",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindEventById.do?vodkatvChannelId={vodkatvChannelId}&eventId={id}&token={token}&userAgent=Chrome",
+            "title": "event",
+            "method": "GET",
+            "targetSchema" : {"$ref" : "event_response.jsch#"}
+        }
+    ]
+}
