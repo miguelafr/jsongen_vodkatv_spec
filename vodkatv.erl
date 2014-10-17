@@ -18,6 +18,12 @@ initial_state() ->
 link_permitted(_Super, State, Link) ->
     PrivateState = jsg_links_utils:private_state(State),
     LinkTitle = jsg_links:link_title(Link),
+  case LinkTitle of
+    "event" ->
+      io:format("Event event: link=~n~p~n",[Link]);
+    _ ->
+      ok
+  end,
     %%io:format("link_permitted => token: ~p | title: ~p~n",
     %%	      [PrivateState#state.token, LinkTitle]),
     case {PrivateState#state.token, LinkTitle} of
