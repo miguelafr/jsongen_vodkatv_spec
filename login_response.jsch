@@ -30,6 +30,27 @@
             "title": "schedule_between_dates",
             "method": "GET",
             "targetSchema" : {"$ref" : "channels_epg_response.jsch#"}
+        },
+        {
+            "rel": "languages",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindLanguages.do?token={token}&userAgent=Chrome",
+            "title": "languages",
+            "method": "GET",
+            "targetSchema" : {"$ref" : "languages_response.jsch#"}
+        },
+        {
+            "rel": "countries",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindCountries.do?token={token}&userAgent=Chrome",
+            "title": "countries",
+            "method": "GET",
+            "targetSchema" : {"$ref" : "countries_response.jsch#"}
+        },
+        {
+            "rel": "categories",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindCategories.do?token={token}&userAgent=Chrome",
+            "title": "categories",
+            "method": "GET",
+            "targetSchema" : {"$ref" : "categories_response.jsch#"}
         }
     ]
 }

@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "languages": {
+            "type": "object",
+	        "required" : ["elements"],
+            "properties": {
+                "elements": {
+                    "type": "array",
+                    "items": {"$ref" : "language.jsch#"}
+                }
+            }
+        }
+    }
+}

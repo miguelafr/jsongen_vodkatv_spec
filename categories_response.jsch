@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "categories": {
+            "type": "object",
+	        "required" : ["elements"],
+            "properties": {
+                "elements": {
+                    "type": "array",
+                    "items": {"$ref" : "category.jsch#"}
+                }
+            }
+        }
+    }
+}
