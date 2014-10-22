@@ -15,6 +15,20 @@
     },
     "links": [
         {
+            "rel": "favorite_channels_schedule",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindScheduleFavoriteChannels.do?token={token}&startIndexChannel=1&countChannel=2&startIndex=1&count=2&fillGaps=false&userAgent=Chrome",
+            "title": "favorite_channels_schedule",
+            "method": "GET",
+            "targetSchema" : {"$ref" : "channels_epg_response.jsch#"}
+        },
+        {
+            "rel": "favorite_channels_schedule_between_dates",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindScheduleBetweenDatesFavoriteChannels.do?token={token}&startIndexChannel=1&countChannel=2&startTime=1413470966679&finishTime=1413470966679&fillGaps=false&userAgent=Chrome",
+            "title": "favorite_channels_schedule_between_dates",
+            "method": "GET",
+            "targetSchema" : {"$ref" : "channels_epg_response.jsch#"}
+        },
+        {
             "rel": "logout",
             "href": "http://193.144.63.20:8082/vodkatv/external/client/core/Logout.do?token={token}&userAgent=Chrome",
             "title": "logout",
