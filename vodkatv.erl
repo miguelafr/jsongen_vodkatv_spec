@@ -20,7 +20,8 @@ link_permitted(_Super, State, Link) ->
     LinkTitle = jsg_links:link_title(Link),
   case LinkTitle of
     "event" ->
-      io:format("Event event: link=~n~p~n",[Link]);
+      %io:format("Event event: link=~n~p~n",[Link]);
+      ok;
     _ ->
       ok
   end,
@@ -54,6 +55,11 @@ next_state_internal(PrivateState, JSONResult, "login") ->
     Token = jsg_jsonschema:propertyValue(JSONResult, "token"),
     PrivateState#state {
         token = Token
+    };
+
+next_state_internal(PrivateState, _JSONResult, "logout") ->
+    PrivateState#state {
+        token = undefined
     };
 
 next_state_internal(PrivateState, _JSONResult, _LinkTitle) ->
