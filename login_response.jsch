@@ -18,6 +18,13 @@
             "targetSchema" : {"$ref" : "channels_response.jsch#"}
         },
         {
+            "rel": "favorite_channels",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindFavoriteChannels.do?token={token}&userAgent=Chrome",
+            "title": "favorite_channels",
+            "method": "GET",
+            "targetSchema" : {"$ref" : "favorite_channels_response.jsch#"}
+        },
+        {
             "rel": "schedule",
             "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindSchedule.do?token={token}&startIndexChannel=1&countChannel=2&startIndex=1&count=2&fillGaps=false&userAgent=Chrome",
             "title": "schedule",

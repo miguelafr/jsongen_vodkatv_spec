@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "channels": {
+            "type": "object",
+	        "required" : ["elements"],
+            "properties": {
+                "elements": {
+                    "type": "array",
+                    "items": {"$ref" : "favorite_channel.jsch#"}
+                }
+            }
+        },
+        "iterator": {"$ref" : "iterator.jsch#"}
+    }
+}

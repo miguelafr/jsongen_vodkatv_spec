@@ -3,17 +3,6 @@
     "properties": {
         "vodkatvChannelId": {
             "type": "string"
-        },
-        "currentNext": {
-            "type": "object",
-            "properties": {
-                "current": {"$ref" : "event.jsch#"},
-                "next": {"$ref" : "event.jsch#"},
-                "nextEvents": {
-                    "type": "array",
-                    "items": {"$ref" : "event.jsch#"}
-                }
-            }
         }
     },
     "links": [
@@ -32,11 +21,11 @@
             "targetSchema" : {"$ref" : "channel_epg_response.jsch#"}
         },
         {
-            "rel": "add_to_favorite_channels",
-            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/AddToFavoriteChannels.do?vodkatvChannelId={vodkatvChannelId}&token={token}&userAgent=Chrome",
-            "title": "add_to_favorite_channels",
+            "rel": "remove_favorite_channel",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/RemoveFromFavoriteChannels.do?vodkatvChannelId={vodkatvChannelId}&token={token}&userAgent=Chrome",
+            "title": "remove_favorite_channel",
             "method": "GET",
             "targetSchema" : {"$ref" : "favorite_channels_response.jsch#"}
-        }
+        },
     ]
 }
