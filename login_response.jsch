@@ -19,14 +19,14 @@
         },
         {
             "rel": "schedule",
-            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindSchedule.do?token={token}&startIndexChannel=1&countChannel=2&startIndex=1&count=2&fillGaps=true&userAgent=Chrome",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindSchedule.do?token={token}&startIndexChannel=1&countChannel=2&startIndex=1&count=2&fillGaps=false&userAgent=Chrome",
             "title": "schedule",
             "method": "GET",
             "targetSchema" : {"$ref" : "channels_epg_response.jsch#"}
         },
         {
             "rel": "schedule_between_dates",
-            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindScheduleBetweenDates.do?token={token}&startIndexChannel=1&countChannel=2&startTime=1413470966679&finishTime=1413470966679&fillGaps=true&userAgent=Chrome",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindScheduleBetweenDates.do?token={token}&startIndexChannel=1&countChannel=2&startTime=1413470966679&finishTime=1413470966679&fillGaps=false&userAgent=Chrome",
             "title": "schedule_between_dates",
             "method": "GET",
             "targetSchema" : {"$ref" : "channels_epg_response.jsch#"}
