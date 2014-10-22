@@ -3,7 +3,8 @@
 
 test1() ->
   js_links_machine:run_statem(vodkatv,["login.jsch","login_response.jsch",
-        "channels_response.jsch", "channel.jsch"]).
+        "channels_response.jsch", "channel.jsch"],
+        [{validator,jesse_validator}]).
 
 test1(N) ->
   js_links_machine:run_statem(vodkatv,["login.jsch","login_response.jsch",
