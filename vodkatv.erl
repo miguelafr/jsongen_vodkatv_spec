@@ -69,6 +69,7 @@ next_state_internal(PrivateState, _JSONResult, _LinkTitle) ->
 % postcondition
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 postcondition(Super, State, Call, Result) ->
+    {_, _, follow_link, [_,{URI,RequestType,Body,QueryParms}], _} = Call, 
     LinkTitle = js_links_machine:call_link_title(Call),
     PrivateState = jsg_links_utils:private_state(State),
     case js_links_machine:validate_call_not_error_result(Call,Result) of
@@ -76,15 +77,47 @@ postcondition(Super, State, Call, Result) ->
 	case js_links_machine:response_has_body(Result) of
 	  true ->
 	    JSONResult = js_links_machine:get_json_body(Result),
-	    postcondition_internal(PrivateState, JSONResult, LinkTitle) andalso
-	      Super(State, Call, Result);
+	    postcondition_internal(PrivateState, {URI,RequestType,Body,QueryParms},
+            JSONResult, LinkTitle) andalso Super(State, Call, Result);
 	  false -> false
 	end;
       false -> false
     end.
 
-postcondition_internal(_PrivateState, _JSONResult, "login") ->
-    true;
+postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, _QueryParms},
+        JSONResult, "login") ->
+    Token = jsg_jsonschema:propertyValue(JSONResult, "token"),
+    ValidUntil = jsg_jsonschema:propertyValue(JSONResult, "validUntil"),
+    Token =/= "" andalso ValidUntil > get_now();
 
-postcondition_internal(_PrivateState, _JSONResult, _LinkTitle) ->
+postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, _QueryParms},
+        JSONResult, "languages") ->
+    Languages = jsg_jsonschema:propertyValue(JSONResult, "languages"),
+    Elements = jsg_jsonschema:propertyValue(Languages, "elements"),
+    erlang:length(Elements) >= 0;
+
+postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, _QueryParms},
+        JSONResult, "countries") ->
+    Countries = jsg_jsonschema:propertyValue(JSONResult, "countries"),
+    Elements = jsg_jsonschema:propertyValue(Countries, "elements"),
+    erlang:length(Elements) >= 0;
+
+postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, _QueryParms},
+        JSONResult, "categories") ->
+    Categories = jsg_jsonschema:propertyValue(JSONResult, "categories"),
+    Elements = jsg_jsonschema:propertyValue(Categories, "elements"),
+    erlang:length(Elements) >= 0;
+
+postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, _QueryParms},
+        JSONResult, "logout") ->
+    JSONResult == {struct,[]};
+
+postcondition_internal(_PrivateState, _Call, _JSONResult, _LinkTitle) ->
     true.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Utilities
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+get_now() ->
+    {MegaSecs, Secs, _MicroSecs} = erlang:now(),
+    (MegaSecs * 1000000 + Secs)*1000.
