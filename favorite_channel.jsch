@@ -26,6 +26,6 @@
             "title": "remove_favorite_channel",
             "method": "GET",
             "targetSchema" : {"$ref" : "favorite_channels_response.jsch#"}
-        },
+        }
     ]
 }
