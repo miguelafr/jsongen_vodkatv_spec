@@ -4,6 +4,12 @@
         "vodkatvChannelId": {
             "type": "string"
         },
+        "number": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
         "currentNext": {
             "type": "object",
             "properties": {
