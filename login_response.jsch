@@ -12,10 +12,31 @@
     "links": [
         {
             "rel": "channels",
-            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindChannels.do?token={token}&startIndex=1&count=2&userAgent=Chrome",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindChannels.do?token={token}&userAgent=Chrome",
             "title": "channels",
             "method": "GET",
-            "targetSchema" : {"$ref" : "channels_response.jsch#"}
+            "targetSchema" : {"$ref" : "channels_response.jsch#"},
+            "schema": {
+                "type": "object",
+                "required": [ "startIndex", "count" ],
+                "additionalProperties" : false,
+                "properties" : {
+                    "startIndex": {
+                        "quickcheck": {
+                            "name" : "vodkatv_generators:gen_integer",
+                            "min": 1,
+                            "max": 100
+                        }
+                    },
+                    "count": {
+                        "quickcheck": {
+                            "name" : "vodkatv_generators:gen_integer",
+                            "min": 0,
+                            "max": 1000
+                        }
+                    }
+                }
+            }
         },
         {
             "rel": "favorite_channels",
