@@ -29,11 +29,9 @@
                         }
                     },
                     "count": {
-                        "quickcheck": {
-                            "name" : "vodkatv_generators:gen_integer",
-                            "min": 0,
-                            "max": 1000
-                        }
+                        "type" : "integer",
+			"minimum": 0,
+                        "maximum": 10
                     }
                 }
             }
