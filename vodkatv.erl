@@ -18,7 +18,7 @@ initial_state() ->
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-compose_alternatives(_,State,Alternatives) ->
+compose_alternatives(_,_State,Alternatives) ->
   jsg_links_utils:freq_alternatives
     ([{1,whatever,"Login.do"},
       {2,whatever,"Logout.do"},
@@ -63,8 +63,14 @@ next_state(Super, State, Result, Call) ->
     NextPrivateState = next_state_internal(PrivateState,
         {URI,RequestType,Body,QueryParms}, JSONResult, LinkTitle), 
 
-    Super(jsg_links_utils:set_private_state(NextPrivateState, State),
-	  Result, Call).
+    NewState = jsg_links_utils:set_private_state(NextPrivateState, State),
+
+    case LinkTitle of
+      "logout" ->
+	jsg_links_utils:remove_dynamic_links(NewState);
+      _ ->
+	Super(NewState, Result, Call)
+    end.
 
 next_state_internal(PrivateState, {_URI, _RequestType, _Body, _QueryParms},
         JSONResult, "login") ->

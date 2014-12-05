@@ -24,14 +24,14 @@
     "links": [
         {
             "rel": "channel",
-            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindChannelById.do?vodkatvChannelId={vodkatvChannelId}&token={token}&userAgent=Chrome",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindChannelById.do?vodkatvChannelId={vodkatvChannelId}&token={login.token}&userAgent=Chrome",
             "title": "channel",
             "method": "GET",
             "targetSchema" : {"$ref" : "channel_response.jsch#"}
         },
         {
             "rel": "schedule_by_channel",
-            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindScheduleByChannel.do?vodkatvChannelId={vodkatvChannelId}&token={token}&startIndex=1&count=2&fillGaps=false&userAgent=Chrome",
+            "href": "http://193.144.63.20:8082/vodkatv/external/client/plugins/television/FindScheduleByChannel.do?vodkatvChannelId={vodkatvChannelId}&token={login.token}&startIndex=1&count=2&fillGaps=false&userAgent=Chrome",
             "title": "schedule_by_channel",
             "method": "GET",
             "targetSchema" : {"$ref" : "channel_epg_response.jsch#"}
