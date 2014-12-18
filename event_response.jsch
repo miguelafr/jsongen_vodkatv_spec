@@ -1,7 +1,17 @@
 {
     "type": "object",
     "properties": {
-        "event": {"$ref" : "event.jsch#"}
+        "event": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        }
     },
     "links": [
         {
