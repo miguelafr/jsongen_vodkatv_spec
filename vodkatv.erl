@@ -115,7 +115,6 @@ next_state_internal(PrivateState, {_URI, _RequestType, _Body, QueryParms},
                 PrivateState#state.favorite_channels_ids)
     };
 
-
 next_state_internal(PrivateState, {_URI, _RequestType, _Body, _QueryParms},
         _JSONResult, "logout") ->
     PrivateState#state {
@@ -192,20 +191,44 @@ postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, _QueryParms},
     erlang:length(Elements) >= 0;
 
 postcondition_internal(PrivateState, {_URI, _RequestType, _Body, _QueryParms},
-        JSONResult, LinkTitle) when LinkTitle =:= "favorite_channels";
-                                    LinkTitle =:= "add_to_favorite_channels";
-                                    LinkTitle =:= "remove_favorite_channel" ->
+        JSONResult, LinkTitle) when LinkTitle =:= "favorite_channels" ->
     Channels = jsg_jsonschema:propertyValue(JSONResult, "channels"),
     Elements = jsg_jsonschema:propertyValue(Channels, "elements"),
     FavoriteChannelIds = PrivateState#state.favorite_channels_ids,
 
-    FavoriteChannelIdsFromState = lists:map(fun(Element) ->
+    FavoriteChannelIdsFromResponse = lists:map(fun(Element) ->
         Channel = get_channel(Element),
         Channel#channel.vodkatvChannelId
     end, Elements),
+
     lists:all(fun(FavoriteChannelId) ->
-        lists:member(FavoriteChannelId, FavoriteChannelIdsFromState)
+        lists:member(FavoriteChannelId, FavoriteChannelIdsFromResponse)
     end, FavoriteChannelIds);
+
+postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, QueryParms},
+        JSONResult, LinkTitle) when LinkTitle =:= "add_to_favorite_channels" ->
+    QueryParamVodkatvChannelId = proplists:get_value("vodkatvChannelId",
+        QueryParms),
+    Channels = jsg_jsonschema:propertyValue(JSONResult, "channels"),
+    Elements = jsg_jsonschema:propertyValue(Channels, "elements"),
+    FavoriteChannelIdsFromResponse = lists:map(fun(Element) ->
+        Channel = get_channel(Element),
+        Channel#channel.vodkatvChannelId
+    end, Elements),
+    lists:member(QueryParamVodkatvChannelId, FavoriteChannelIdsFromResponse);
+
+postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, QueryParms},
+        JSONResult, LinkTitle) when LinkTitle =:= "remove_favorite_channel" ->
+
+    QueryParamVodkatvChannelId = proplists:get_value("vodkatvChannelId",
+        QueryParms),
+    Channels = jsg_jsonschema:propertyValue(JSONResult, "channels"),
+    Elements = jsg_jsonschema:propertyValue(Channels, "elements"),
+    FavoriteChannelIdsFromResponse = lists:map(fun(Element) ->
+        Channel = get_channel(Element),
+        Channel#channel.vodkatvChannelId
+    end, Elements),
+    not lists:member(QueryParamVodkatvChannelId, FavoriteChannelIdsFromResponse);
 
 postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, _QueryParms},
         JSONResult, "logout") ->
