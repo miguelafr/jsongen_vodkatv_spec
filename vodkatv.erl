@@ -146,8 +146,6 @@ postcondition(Super, State, Call, Result) ->
 
 postcondition_internal(PrivateState, {_URI, _RequestType, _Body, _QueryParms},
         JSONResult, "login") ->
-  io:format("hello ~p~n",[JSONResult]),
-  io:format("now = ~p~n",[get_now()]),
     ValidUntil = jsg_jsonschema:propertyValue(JSONResult, "validUntil"),
     PrivateState#state.token =/= "" andalso ValidUntil > get_now();
 
