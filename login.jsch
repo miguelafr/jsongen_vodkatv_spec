@@ -2,7 +2,7 @@
     "links": [
         {
             "rel": "login",
-            "href": "http://193.144.63.20:8082/vodkatv/external/client/core/Login.do?appId=HJ8n59WO0Jcmr9l0U0FLXYlXaQOyzn&userAgent=Chrome",
+            "href": "http://192.168.56.101:8082/vodkatv/external/client/core/Login.do?appId=HJ8n59WO0Jcmr9l0U0FLXYlXaQOyzn&userId=test&password=test&userAgent=Chrome",
             "title": "login",
             "method": "GET",
             "targetSchema" : {"$ref" : "login_response.jsch#"},

@@ -12,14 +12,5 @@
             }
         },
         "iterator": {"$ref" : "iterator.jsch#"}
-    },
-    "links": [
-        {
-            "rel": "logout",
-            "href": "http://193.144.63.20:8082/vodkatv/external/client/core/Logout.do?token={token}&userAgent=Chrome",
-            "title": "logout",
-            "method": "GET",
-            "targetSchema" : {"$ref" : "logout_response.jsch#"}
-        }
-    ]
+    }
 }
