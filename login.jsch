@@ -6,23 +6,6 @@
             "title": "login",
             "method": "GET",
             "targetSchema" : {"$ref" : "login_response.jsch#"},
-            "schema": {
-                "type": "object",
-                "required": [ "userId", "password" ],
-                "additionalProperties" : false,
-                "properties" : {
-                    "userId": {
-                        "quickcheck": {
-                            "name" : "vodkatv_generators:gen_userId"
-                        }
-                    },
-                    "password": {
-                        "quickcheck": {
-                            "name" : "vodkatv_generators:gen_password"
-                        }
-                    }
-                }
-            }
         }
     ]
 }
