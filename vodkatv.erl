@@ -18,14 +18,6 @@ initial_state() ->
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-compose_alternatives(_,_State,Alternatives) ->
-  jsg_links_utils:freq_alternatives
-    ([{1,whatever,"Login.do"},
-      {2,whatever,"Logout.do"},
-      {5,whatever,""}],
-     Alternatives).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % link_permitted
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 link_permitted(_Super, State, Link) ->
@@ -54,9 +46,8 @@ link_permitted(_Super, State, Link) ->
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % next_state
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-next_state(Super, State, Result, Call) ->
-    {_, _, follow_link, [_, {URI, RequestType, Body, QueryParms}], _} = Call, 
-    LinkTitle = js_links_machine:call_link_title(Call),
+next_state(Super, State, Result, Args=[_, {URI, RequestType, Body, QueryParms}]) ->
+    LinkTitle = js_links_machine:args_link_title(Args),
     PrivateState = jsg_links_utils:private_state(State),
     JSONResult = js_links_machine:get_json_body(Result),
 
@@ -69,7 +60,7 @@ next_state(Super, State, Result, Call) ->
       "logout" ->
 	jsg_links_utils:remove_dynamic_links(NewState);
       _ ->
-	Super(NewState, Result, Call)
+	Super(NewState, Result, Args)
     end.
 
 next_state_internal(PrivateState, {_URI, _RequestType, _Body, _QueryParms},
@@ -128,17 +119,16 @@ next_state_internal(PrivateState, {_URI, _RequestType, _Body, _QueryParms},
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % postcondition
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-postcondition(Super, State, Call, Result) ->
-    {_, _, follow_link, [_, {URI, RequestType, Body, QueryParms}], _} = Call, 
-    LinkTitle = js_links_machine:call_link_title(Call),
+postcondition(Super, State, Args=[_, {URI, RequestType, Body, QueryParms}], Result) ->
+    LinkTitle = js_links_machine:args_link_title(Args),
     PrivateState = jsg_links_utils:private_state(State),
-    case js_links_machine:validate_call_not_error_result(Call,Result) of
+    case js_links_machine:validate_call_not_error_result(Args,Result) of
       true -> 
 	case js_links_machine:response_has_body(Result) of
 	  true ->
 	    JSONResult = js_links_machine:get_json_body(Result),
 	    postcondition_internal(PrivateState, {URI,RequestType,Body,QueryParms},
-            JSONResult, LinkTitle) andalso Super(State, Call, Result);
+            JSONResult, LinkTitle) andalso Super(State, Args, Result);
 	  false -> false
 	end;
       false -> false
@@ -234,7 +224,7 @@ postcondition_internal(_PrivateState, {_URI, _RequestType, _Body, _QueryParms},
         JSONResult, "logout") ->
     JSONResult == {struct,[]};
 
-postcondition_internal(_PrivateState, _Call, _JSONResult, _LinkTitle) ->
+postcondition_internal(_PrivateState, _Args, _JSONResult, _LinkTitle) ->
     true.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
