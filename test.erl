@@ -5,7 +5,7 @@ test1() ->
   ok = application:ensure_started(jsongen),
   js_links_machine:run_statem(vodkatv,["login.jsch","login_response.jsch",
         "channels_response.jsch", "channel.jsch"],
-        [{timeout,5000}, {show_uri,true}, {validator,jesse_validator}]).
+        [{timeout,5000}, {show_uri,true}]).
 
 test1(N) ->
   ok = application:ensure_started(jsongen),
